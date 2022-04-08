@@ -3,21 +3,21 @@
             (t (cons (mapcar 'car l) (transposta (mapcar 'cdr l)))))
 )
 
-(defun ProducteEscalar (l)
-    (apply '+ (mapcar 'mult (transposta l))))
+(defun ProducteEscalar (l) 
+    (apply '+ (mapcar 'mult (transposta l)))
+)
 
 (defun unaFila (fila filas)
     (cond
         ((null filas) nil)
-        (t (cons (producteEscalar (list fila (car filas) ) ) 
-        (unaFila fila (cdr filas)) ) )
+        (t (cons (producteEscalar (list fila (car filas))) (unaFila fila (cdr filas))))
     )
 )
 
 (defun operacio (l1 l2)
     (cond 
         ((equal (cdr l1) nil) (cons (unaFila (car l1) l2) nil))
-        (t (cons (unaFila (car l1) l2) (operacio (cdr l1) l2)   ))
+        (t (cons (unaFila (car l1) l2) (operacio (cdr l1) l2)))
     )
 )
 
@@ -128,4 +128,8 @@
     (initCub)
     (initPrisma)
     (initOctaedre)
+)
+
+(defun trasllada-figura (f x y z) ;'cub1 2 3 5
+    (putprop (multmatriu (get f 'matriu)(translacio x y z)) 'matriu)
 )
