@@ -130,6 +130,21 @@
     (initOctaedre)
 )
 
+;--------------------------------------------------------------------
+;No probado si funciona :)
+;--------------------------------------------------------------------
+
 (defun trasllada-figura (f x y z) ;'cub1 2 3 5
     (putprop (multmatriu (get f 'matriu)(translacio x y z)) 'matriu)
 )
+
+(defun rota-figura (f x y z)
+    (putprop (multmatriu (get f 'matriu) (rotax x)) 'matriu)
+    (putprop (multmatriu (get f 'matriu) (rotay y)) 'matriu)
+    (putprop (multmatriu (get f 'matriu) (rotaz z)) 'matriu)
+)
+
+(defun escala-figura (f x y z)
+    (putprop (multmatriu (get f 'matriu) (escalat x y z)) 'matriu)
+)
+;--------------------------------------------------------------------
