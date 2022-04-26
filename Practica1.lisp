@@ -220,5 +220,6 @@
 ;--------------------------------------------------------------------
 ; DUDAS :
 ; está bien creado los átomos de los patrons ??
-; para modificar una propiedad se debe volver a hacer putprop del mismo átomo ??
+; para modificar una propiedad se debe volver a hacer putprop del mismo átomo
+; o se tiene que borrar y despues crearlo o hay una funcion para modificar ??
 ;--------------------------------------------------------------------
