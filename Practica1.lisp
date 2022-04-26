@@ -184,3 +184,7 @@
     (putprop (multmatriu (get f 'matriu) (escalat x y z)) 'matriu)
 )
 ;--------------------------------------------------------------------
+; DUDAS :
+; está bien creado los átomos de los patrons ??
+; para modificar una propiedad se debe volver a hacer putprop del mismo átomo ??
+;--------------------------------------------------------------------
