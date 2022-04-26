@@ -125,7 +125,7 @@
 )
 
 (defun initEscena ()
-    (putprop 'escena '() 'figures)          ;inicialmente vacia
+    (putprop 'escena nil 'figures)          ;inicialmente vacia
 )
 
 (defun inicia-patrons ()
@@ -178,24 +178,24 @@
 )
 
 (defun ficarFigura (x l)
-    (snoc 'x 'l)
+    (snoc x l)
 )
 
 ;(crea-figura nom patró color): És una funció que permet la creació d’una figura 3D a partir
 ;del patró triat i guarda aquesta figura dins la propietat “figures” de tipus llista d’un àtom
 ;“escena”.
 (defun crea-figura (n p c)
-    (putprop 'n p 'patro)
-    (putprop 'n 'c 'color)
-    (putprop 'n matriuIdentitat 'matriu)
-    (putprop 'escena (ficarFigura 'n (get 'escena 'figures)) 'figures)
+    (putprop n p 'patro)
+    (putprop n c 'color)
+    (putprop n (matriuIdentitat) 'matriu)
+    (putprop 'escena (ficarFigura n (get 'escena 'figures)) 'figures)
 )
 
 ;--------------------------------------------------------------------
 ;(inicia-figura f): posa la figura f a la seva posició inicial (matriu identitat a la
 ;transformació)
 (defun inicia-figura (f)
-    (putprop 'n matriuIdentitat 'matriu)
+    (putprop f matriuIdentitat 'matriu)
 )
 
 ;--------------------------------------------------------------------
