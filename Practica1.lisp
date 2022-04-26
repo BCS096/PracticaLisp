@@ -131,6 +131,42 @@
 )
 
 ;--------------------------------------------------------------------
+; Manu
+;--------------------------------------------------------------------
+(defun borra-element (x llista)
+    (cond ((null llista) nil)
+        ((equal x (car llista)) (cdr llista))
+        (t (cons (car llista) (borra x (cdr llista))))
+    )
+)
+
+(defun borra-figura (f)
+    (putprop 
+    'escena 
+        (
+            borra-element
+            (
+                ;f -> element
+                f
+                ;(get 'escena 'figures) -> llista
+                (get 'escena 'figures)
+            )
+        )
+    'figures
+    )
+)
+
+; Método de pintar pero sustituyendo con el color blanco, esperar a que se haga (Marc dale :) )
+(defun cls-figura (f)
+    ()
+)
+
+(defun borra-figures ()
+    (putprop 'escena nil 'figures)
+    (cls)
+)
+
+;--------------------------------------------------------------------
 ;No probado si funciona :)
 ;--------------------------------------------------------------------
 
