@@ -124,6 +124,10 @@
     (4 8 5) (1 9 10) (2 10 11) (3 11 12) (4 12 9)) 'cares)
 )
 
+(defun initEscena ()
+    (putprop 'escena '() 'figures)          ;inicialmente vacia
+)
+
 (defun inicia-patrons ()
     (initCub)
     (initPrisma)
