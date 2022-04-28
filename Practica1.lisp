@@ -223,3 +223,83 @@
 ; para modificar una propiedad se debe volver a hacer putprop del mismo átomo
 ; o se tiene que borrar y despues crearlo o hay una funcion para modificar ??
 ;--------------------------------------------------------------------
+;--------------------------------------------------------------------
+;MARC
+;--------------------------------------------------------------------
+;Metodo que extrae lista de figuras de escena
+(defun pinta-figures ()
+    pinta-llista-figures ;(x llista)
+        (
+            (get 'escena 'figures)
+        )
+)
+;recorre lista x llamanda a pinta-figura para cada elem
+(defun pinta-llista-figures (x llista)
+    ;mientras no sea nula
+    (cond ((null x) nil)
+        ;pinta figura i
+        (t (pinta-figura (car x)
+            ;pasamos figura i++ 
+           (pinta-llista-figures (cdr x))
+           )
+        )
+    )
+)
+
+;patro cub
+
+;punts ((0 0 0) (1 0 0) (1 0 1) (0 0 1) (0 1 0) (1 1 0) (1 1 1) (0 1 1))
+;arestes ((1 2) (2 3) (3 4) (4 1) (1 5) (2 6) (3 7) (4 8) (5 6) (6 7) (7 8) (8 5))
+;cares ((1 2 3 4) (1 6 9 5) (2 6 10 7) (3 7 11 8) (4 8 12 5) (9 10 11 12))
+
+(defun pinta-figura (f) ;figura
+    pinta-caras 
+        (
+            (get (get f 'patro) 'cares) ;cares ((1 2 3 4) (1 6 9 5) (2 6 10 7) (3 7 11 8) (4 8 12 5) (9 10 11 12))
+        )
+)
+
+
+(defun pinta-caras (c f) ;((1 2 3 4) (1 6 9 5) (2 6 10 7) (3 7 11 8) (4 8 12 5) (9 10 11 12)) , figura
+    (cond ((null c) nil)
+        (t (pinta-cara-indv ((car c)f) ;(1 2 3 4)
+           (pinta-caras (cdr c)) ;... siguiente cara (x1,x2,x3,x4)
+           )
+        )
+    )
+)
+
+(defun pinta-cara-indv (c f) ;(1 2 3 4), figura
+    (cond ((null c) nil)
+        (t (pinta-arestas ((car c)f) ;(-1- 2 3 4)
+           (pinta-cara-indv ((cdr c)f)) ;(1 -2- 3 4) 
+           )
+        )
+    )
+)
+
+(defun pinta-arestas (a f) ;1 , figura
+    pinta-aresta-indv
+    (
+        ;pos -1- de "arestes ((1 2) (2 3) (3 4) (4 1) (1 5) (2 6) (3 7) (4 8) (5 6) (6 7) (7 8) (8 5))" luego (1 2)
+        (NTH (c) (get (get f 'patro) 'arestes))
+        f
+    )
+   ;concatena el resultado de llamar una vez a get-punts con car de lllista y otra vez a get-punts con cdr de llista luego con eso llama a pinta
+)
+
+(defun pinta-aresta-indv (a f) ;(1 2) , figura
+    pinta-punts( 
+        ;pos (-1- 2) de "punts ((0 0 0) (1 0 0) (1 0 1) (0 0 1) (0 1 0) (1 1 0) (1 1 1) (0 1 1))" luego (0 0 0)
+        (NTH (car a) (get (get f 'patro) 'punts)) 
+        ;pos (1 -2-) de "punts ((0 0 0) (1 0 0) (1 0 1) (0 0 1) (0 1 0) (1 1 0) (1 1 1) (0 1 1))" luego (1 0 0)
+        (NTH (cdr a) (get (get f 'patro) 'punts))
+    )
+)
+;[2:53 p. m., 28/4/2022] Coti: Te falta antes de pintar multiplicar todos los puntos por la matriz
+;de transformación de la figura i tmb sumar a cada punto no me acuerdo cuanto para que salga en medio de la pantalla
+;color
+(defun pinta-punts (a b) ;(0 0 0) , (1 0 0) Se ignora la z (3r parametro)
+    (move (car a) (cdr a));lapiz en 1r punto
+    (draw (car b) (cdr b));desplazamos lapiz al 2r punto pintando
+)
