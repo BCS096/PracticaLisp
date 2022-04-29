@@ -138,7 +138,6 @@
     (initCub)
     (initPrisma)
     (initOctaedre)
-    (initEscena)
 )
 
 ;--------------------------------------------------------------------
@@ -297,3 +296,9 @@
             (get 'escena 'figures)
         )
 )
+
+
+;-----------------------------------------
+;ejecuciones
+(initEscena)
+(inicia-patrons)
