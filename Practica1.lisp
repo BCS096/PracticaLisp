@@ -233,7 +233,12 @@
 ;[2:53 p. m., 28/4/2022] Coti: Te falta antes de pintar multiplicar todos los puntos por la matriz
 ;de transformación de la figura i tmb sumar a cada punto no me acuerdo cuanto para que salga en medio de la pantalla
 ;color
-(defun pinta-punts (a b) ;(0 0 0) , (1 0 0) Se ignora la z (3r parametro)
+(defun pinta-punts (a b f) ;(0 0 0) , (1 0 0) Se ignora la z (3r parametro)
+;snoc , mult fila , draw
+    
+    
+    (putprop f ((unaFila (snoc 1 a) (get f 'matriu))) 'matriu)
+    (putprop f ((unaFila (snoc 1 b) (get f 'matriu))) 'matriu);arregla:)
     (move (car a) (cdr a));lapiz en 1r punto
     (draw (car b) (cdr b));desplazamos lapiz al 2r punto pintando
 )
@@ -241,9 +246,9 @@
 (defun pinta-aresta-indv (a f) ;(1 2) , figura
     pinta-punts( 
         ;pos (-1- 2) de "punts ((0 0 0) (1 0 0) (1 0 1) (0 0 1) (0 1 0) (1 1 0) (1 1 1) (0 1 1))" luego (0 0 0)
-        (NTH (car a) (get (get f 'patro) 'punts)) 
+        (NTH (car a) (get (get f 'patro) 'punts) f) 
         ;pos (1 -2-) de "punts ((0 0 0) (1 0 0) (1 0 1) (0 0 1) (0 1 0) (1 1 0) (1 1 1) (0 1 1))" luego (1 0 0)
-        (NTH (cdr a) (get (get f 'patro) 'punts))
+        (NTH (cdr a) (get (get f 'patro) 'punts) f)
     )
 )
 
