@@ -12,6 +12,7 @@
     (apply '+ (mapcar 'mult (transposta l)))
 )
 
+; fila -> un punto, filas -> una matriz
 (defun unaFila (fila filas)
     (cond
         ((null filas) nil)
