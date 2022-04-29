@@ -138,7 +138,6 @@
     (initCub)
     (initPrisma)
     (initOctaedre)
-    (initEscena)
 )
 
 ;--------------------------------------------------------------------
@@ -222,12 +221,6 @@
     (putprop f (multmatriu (get f 'matriu) (escalat x y z)) 'matriu)
 )
 ;--------------------------------------------------------------------
-; DUDAS :
-; está bien creado los átomos de los patrons ??
-; para modificar una propiedad se debe volver a hacer putprop del mismo átomo
-; o se tiene que borrar y despues crearlo o hay una funcion para modificar ??
-;--------------------------------------------------------------------
-;--------------------------------------------------------------------
 ;MARC
 ;--------------------------------------------------------------------
 ;[2:53 p. m., 28/4/2022] Coti: Te falta antes de pintar multiplicar todos los puntos por la matriz
@@ -302,3 +295,9 @@
             (get 'escena 'figures)
         )
 )
+
+
+;-----------------------------------------
+;ejecuciones
+(initEscena)
+(inicia-patrons)
