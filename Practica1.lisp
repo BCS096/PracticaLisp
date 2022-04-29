@@ -31,6 +31,10 @@
     (operacio l1 (transposta l2))
 )
 
+(defun multPunt (punt matriu)
+    (unafila punt (transposta matriu))
+)
+
 ;(multMatriu '((1 2 3 2) (2 3 4 5) (1 5 6 3) (1 2 2 2)) 
 ;'((2 3 5 7) (2 3 1 3) (3 2 2 1) (3 4 5 2)))
 
@@ -223,34 +227,30 @@
 ;--------------------------------------------------------------------
 ;MARC
 ;--------------------------------------------------------------------
-;[2:53 p. m., 28/4/2022] Coti: Te falta antes de pintar multiplicar todos los puntos por la matriz
-;de transformación de la figura i tmb sumar a cada punto no me acuerdo cuanto para que salga en medio de la pantalla
-;color
 (defun pinta-punts (a b f) ;(0 0 0) , (1 0 0) Se ignora la z (3r parametro)
 ;snoc , mult fila , draw
-    (color (car (get f 'color)) (cadr (get f 'color)) (caddr 
-    (get f 'color)) )
+    (color (car (get f 'color)) (cadr (get f 'color)) (caddr (get f 'color)) )
     (move (car a) (car (cdr a) ));lapiz en 1r punto
     (draw (car b) (car (cdr b)));desplazamos lapiz al 2r punto pintando
 )
 
+
 (defun pinta-aresta-indv (a f) ;(1 2) , figura
-;falta lo de numeros enteros
+;TO DO : falta lo de numeros enteros
+;TO DO : sumar cada punto por x para poner el dibujo en medio
     (pinta-punts 
         ;pos (-1- 2) de "punts ((0 0 0) (1 0 0) (1 0 1) (0 0 1) (0 1 0) (1 1 0) (1 1 1) (0 1 1))" luego (0 0 0)
-        (unaFila (snoc 1 (NTH (car a) (get (get f 'patro) 'punts ) ))
-         (get f 'matriu))
+        (multpunt (snoc 1 (NTH (- (car a) 1) (get (get f 'patro) 'punts ) )) (get f 'matriu))
         ;pos (1 -2-) de "punts ((0 0 0) (1 0 0) (1 0 1) (0 0 1) (0 1 0) (1 1 0) (1 1 1) (0 1 1))" luego (1 0 0)
-        (unaFila (snoc 1 (NTH (car (cdr a)) (get (get f 'patro) 'punts ) ))
-         (get f 'matriu))
+        (multpunt (snoc 1 (NTH (- (car (cdr a)) 1) (get (get f 'patro) 'punts) )) (get f 'matriu))
          f
     )
 )
 
+;     COMPROBADO HASTA AQUI !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 (defun pinta-arestas (a f) ;1 , figura
-    pinta-aresta-indv
-    (
+    (pinta-aresta-indv
         ;pos -1- de "arestes ((1 2) (2 3) (3 4) (4 1) (1 5) (2 6) (3 7) (4 8) (5 6) (6 7) (7 8) (8 5))" luego (1 2)
         (NTH (a) (get (get f 'patro) 'arestes))
         f
@@ -274,10 +274,9 @@
     )
 )
 (defun pinta-figura (f) ;figura
-    pinta-caras 
-        (
+    (pinta-caras 
             (get (get f 'patro) 'cares) f ;cares ((1 2 3 4) (1 6 9 5) (2 6 10 7) (3 7 11 8) (4 8 12 5) (9 10 11 12))
-        )
+    )
 )
 ;recorre lista x llamanda a pinta-figura para cada elem
 (defun pinta-llista-figures (x llista)
