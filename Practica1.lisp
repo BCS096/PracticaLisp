@@ -26,7 +26,6 @@
     )
 )
 
-
 ; Habria que hacer mas pruebas de esta función a ver si funciona siempre pero de momento ha ido bien
 (defun multMatriu (l1 l2)
     (operacio l1 (transposta l2))
@@ -35,13 +34,6 @@
 (defun multPunt (punt matriu)
     (unafila punt (transposta matriu))
 )
-
-;(multMatriu '((1 2 3 2) (2 3 4 5) (1 5 6 3) (1 2 2 2)) 
-;'((2 3 5 7) (2 3 1 3) (3 2 2 1) (3 4 5 2)))
-
-;----------------------------------------------------------------------------------------------------------------------------------------------
-;TODAS ESTAS FUNCIONES PROBADAS
-;----------------------------------------------------------------------------------------------------------------------------------------------
 
 (defun grausARadians (graus)
     (/ (* graus pi) 180)
@@ -108,13 +100,13 @@
 
 ;patró prisma
 
-;punts ((0 0 0) (1 0 0) (0 0 1) (0 1 0) (1 1 0) (0 1 1))
+;punts ((0 0 0) (1 0 0) (0.5 0 -1) (0 1 0) (1 1 0) (0.5 1 -1))
 ;arestes ((1 2) (2 3) (3 1) (1 4) (2 5) (3 6) (4 5) (5 6) (6 4))
 ;cares ((1 2 3) (1 5 7 4) (2 5 8 6) (3 6 9 4) (7 8 9))
 
 (defun initPrisma ()
-    (putprop 'prisma '((0 0 0) (1 0 0) (0 0 1) (0 1 0) 
-    (1 1 0) (0 1 1)) 'punts)
+    (putprop 'prisma '((0 0 0) (1 0 0) (0.5 0 -1) (0 1 0) 
+    (1 1 0) (0.5 1 -1)) 'punts)
     (putprop 'prisma '((1 2) (2 3) (3 1) (1 4) (2 5) (3 6) 
     (4 5) (5 6) (6 4)) 'arestes)
     (putprop 'prisma '((1 2 3) (1 5 7 4) (2 5 8 6)
@@ -145,11 +137,9 @@
     (initPrisma)
     (initOctaedre)
 )
-
-;--------------------------------------------------------------------
-; Manu 
+;---------------------------------------------------------------------------------------------------
 ;NINGÚN MÉTODO PROBADO
-;--------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------
 (defun borra-element (x llista)
     (cond ((null llista) nil)
         ((equal x (car llista)) (cdr llista))
@@ -182,10 +172,8 @@
     (putprop 'escena nil 'figures)
     (cls)
 )
-;--------------------------------------------------------------------
-;DAM
-;TODOS LOS METODOS PROBADOS
-;--------------------------------------------------------------------
+;------------------------------------------------------------------------------------------------------
+
 (defun  matriuIdentitat () 
     (list '(1 0 0 0) '(0 1 0 0) '(0 0 1 0) '(0 0 0 1))
 )
@@ -211,11 +199,6 @@
     (putprop f (matriuIdentitat) 'matriu)
 )
 
-;--------------------------------------------------------------------
-;COTI
-;TODOS LOS MÉTODOS PROBADOS
-;--------------------------------------------------------------------
-
 (defun trasllada-figura (f x y z)
     (putprop f (multmatriu (get f 'matriu) (translacio x y z)) 'matriu)
 )
@@ -229,19 +212,15 @@
 (defun escala-figura (f x y z)
     (putprop f (multmatriu (get f 'matriu) (escalat x y z)) 'matriu)
 )
-;--------------------------------------------------------------------
-;MARC
-;--------------------------------------------------------------------
+
 (defun pinta-punts (a b f)
     (color (car (get f 'color)) (cadr (get f 'color)) (caddr (get f 'color)) )
-    (move (car a) (car (cdr a) ));lapiz en 1r punto
-    (draw (car b) (car (cdr b)));desplazamos lapiz al 2r punto pintando
+    ;               X                            Y
+    (move (+ (realpart (round (car a))) 320) (+ (realpart (round (car (cdr a)))) 187));lapiz en 1r punto
+    (draw (+ (realpart (round (car b))) 320) (+ (realpart (round (car (cdr b)))) 187));desplazamos lapiz al 2r punto pintando
 )
 
-
 (defun pinta-aresta-indv (a f) ;(1 2) , figura
-;TO DO : falta lo de numeros enteros
-;TO DO : sumar cada punto por x para poner el dibujo en medio
     (pinta-punts 
         (multpunt (snoc 1 (NTH (- (car a) 1) (get (get f 'patro) 'punts ) )) (get f 'matriu))
         (multpunt (snoc 1 (NTH (- (car (cdr a)) 1) (get (get f 'patro) 'punts) )) (get f 'matriu))
@@ -249,29 +228,24 @@
     )
 )
 
-;     COMPROBADO HASTA AQUI !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 (defun pinta-arestas (a f) ;1 , figura
     (pinta-aresta-indv
         ;pos -1- de "arestes ((1 2) (2 3) (3 4) (4 1) (1 5) (2 6) (3 7) (4 8) (5 6) (6 7) (7 8) (8 5))" luego (1 2)
-        (NTH (a) (get (get f 'patro) 'arestes))
+        (NTH (- a 1) (get (get f 'patro) 'arestes))
         f
     )
    ;concatena el resultado de llamar una vez a get-punts con car de lllista y otra vez a get-punts con cdr de llista luego con eso llama a pinta
 )
 (defun pinta-cara-indv (c f) ;(1 2 3 4), figura
     (cond ((null c) nil)
-        (t (pinta-arestas ((car c)f) ;(-1- 2 3 4)
-           (pinta-cara-indv ((cdr c)f)) ;(1 -2- 3 4) 
-           )
+        (t (pinta-arestas (car c) f)  (pinta-cara-indv (cdr c) f) ;(1 -2- 3 4) 
         )
     )
 )
 (defun pinta-caras (c f) ;((1 2 3 4) (1 6 9 5) (2 6 10 7) (3 7 11 8) (4 8 12 5) (9 10 11 12)) , figura
     (cond ((null c) nil)
-        (t (pinta-cara-indv ((car c) f) ;(1 2 3 4)
-           (pinta-caras (cdr c) f) ;... siguiente cara (x1,x2,x3,x4)
-           )
+        (t (pinta-cara-indv (car c) f) ;(1 2 3 4)
+           (pinta-caras (cdr c) f) ;... siguiente cara (x1,x2,x3,x  
         )
     )
 )
@@ -280,15 +254,17 @@
             (get (get f 'patro) 'cares) f ;cares ((1 2 3 4) (1 6 9 5) (2 6 10 7) (3 7 11 8) (4 8 12 5) (9 10 11 12))
     )
 )
+
+; COMPROBADO HASTA AQUI !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 ;recorre lista x llamanda a pinta-figura para cada elem
 (defun pinta-llista-figures (x llista)
     ;mientras no sea nula
     (cond ((null x) nil)
         ;pinta figura i
-        (t (pinta-figura (car x)
+        (t (pinta-figura (car x))
             ;pasamos figura i++ 
            (pinta-llista-figures (cdr x))
-           )
         )
     )
 )
@@ -304,3 +280,12 @@
 ;ejecuciones
 (initEscena)
 (inicia-patrons)
+;__________________________________________________
+; NO BORRAR
+;(crea-figura 'o 'octaedre '(0 255 0))
+;(escala-figura 'o 100 100 50)
+;(rota-figura 'o 0 30 0)
+;comportamiento extraño al hacer un rota a la z
+;lo hace bien pero pinta la figura mas abajo
+;mirar si eso es un error
+;__________________________________________________
