@@ -26,7 +26,6 @@
     )
 )
 
-; Habria que hacer mas pruebas de esta función a ver si funciona siempre pero de momento ha ido bien
 (defun multMatriu (l1 l2)
     (operacio l1 (transposta l2))
 )
@@ -192,7 +191,6 @@
     (putprop 'escena (ficarFigura n (get 'escena 'figures)) 'figures)
 )
 
-;--------------------------------------------------------------------
 ;(inicia-figura f): posa la figura f a la seva posició inicial (matriu identitat a la
 ;transformació)
 (defun inicia-figura (f)
@@ -280,12 +278,6 @@
 ;ejecuciones
 (initEscena)
 (inicia-patrons)
-;__________________________________________________
-; NO BORRAR
 ;(crea-figura 'o 'octaedre '(0 255 0))
 ;(escala-figura 'o 100 100 50)
 ;(rota-figura 'o 0 30 0)
-;comportamiento extraño al hacer un rota a la z
-;lo hace bien pero pinta la figura mas abajo
-;mirar si eso es un error
-;__________________________________________________
