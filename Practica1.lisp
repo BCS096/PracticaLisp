@@ -282,9 +282,9 @@
 (inicia-patrons)
 ;__________________________________________________
 ; NO BORRAR
-;(crea-figura 'o 'octaedre '(0 255 0))
-;(escala-figura 'o 100 100 50)
-;(rota-figura 'o 0 30 0)
+(crea-figura 'o 'octaedre '(0 255 0))
+(escala-figura 'o 100 100 50)
+(rota-figura 'o 0 30 0)
 ;comportamiento extraño al hacer un rota a la z
 ;lo hace bien pero pinta la figura mas abajo
 ;mirar si eso es un error
