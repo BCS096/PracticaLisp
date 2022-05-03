@@ -128,35 +128,23 @@
     (initPrisma)
     (initOctaedre)
 )
-;---------------------------------------------------------------------------------------------------
-;NINGÚN MÉTODO PROBADO
-;---------------------------------------------------------------------------------------------------
+
 (defun borra-element (x llista)
     (cond ((null llista) nil)
         ((equal x (car llista)) (cdr llista))
-        (t (cons (car llista) (borra x (cdr llista))))
+        (t (cons (car llista) (borra-element x (cdr llista))))
     )
 )
 
 (defun borra-figura (f)
-    (putprop 
-    'escena 
-        (
-            borra-element
-            (
-                ;f -> element
-                f
-                ;(get 'escena 'figures) -> llista
-                (get 'escena 'figures)
-            )
-        )
-    'figures
-    )
+    (putprop 'escena (borra-element f (get 'escena 'figures)) 'figures)
+    (cls)
+    (pinta-figures)
 )
 
-; Método de pintar pero sustituyendo con el color blanco, esperar a que se haga (Marc dale :) )
-(defun cls-figura (f)
-    ()
+(defun cls-figura (f)  
+    (cls)
+    (pinta-llista-figures (borra-element f (get 'escena 'figures)))
 )
 
 (defun borra-figures ()
@@ -245,32 +233,29 @@
     )
 )
 
-; COMPROBADO HASTA AQUI !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 ;recorre lista x llamanda a pinta-figura para cada elem
-(defun pinta-llista-figures (x llista)
+(defun pinta-llista-figures (x)
     ;mientras no sea nula
-    (cond ((null x) nil)
+    (cond
+    ((null x) nil)
         ;pinta figura i
-        (t (pinta-figura (car x))
-            ;pasamos figura i++ 
-           (pinta-llista-figures (cdr x))
-        )
+     (t (pinta-figura (car x)) (pinta-llista-figures (cdr x)))  ; ('cub1 'prisma1 'cub2)
     )
 )
 ;Metodo que extrae lista de figuras de escena
 (defun pinta-figures ()
-    pinta-llista-figures ;(x llista)
-        (
-            (get 'escena 'figures)
-        )
+    (pinta-llista-figures (get 'escena 'figures))
 )
 
 ;-----------------------------------------
 ;ejecuciones
 (initEscena)
 (inicia-patrons)
-(crea-figura 'o 'octaedre '(0 255 0))
+(crea-figura 'o 'octaedre '(255 0 0))
 (escala-figura 'o 100 200 100)
 (rota-figura 'o 0 30 0)
-(pinta-figura 'o)
+(trasllada-figura 'o 50 0 0)
+(crea-figura 'cub1 'cub '(0 0 255))
+(escala-figura 'cub1 100 100 100)
+(rota-figura 'cub1 30 30 0)
+
