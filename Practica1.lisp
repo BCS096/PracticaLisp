@@ -251,7 +251,60 @@
 (defun pinta-figures ()
     (pinta-llista-figures (get 'escena 'figures))
 )
-
+;-----------------------------------------
+; PARTE 2
+;-----------------------------------------
+(defun anima-rotacio (f)
+    (cls)
+    (print 'rotacio)
+    (pinta-figura f)
+    (setq key (get-key))
+    (cond 
+        ((= key 336) (rota-figura f -5 0 0)(anima-rotacio f)) ;izq
+        ((= key 328) (rota-figura f 5 0 0)(anima-rotacio f)) ;der
+        ((= key 333) (rota-figura f 0 5 0)(anima-rotacio f)) ;up
+        ((= key 331) (rota-figura f 0 -5 0)(anima-rotacio f)) ;down
+        ((= key 113)) ;q
+    )
+)
+(defun anima-translacio (f)
+    (cls)
+    (print 'translacio)
+    (pinta-figura f)
+    (setq key (get-key))
+    (cond 
+        ((= key 331) (trasllada-figura f -5 0 0)(anima-translacio f)) ;izq
+        ((= key 333) (trasllada-figura f 5 0 0)(anima-translacio f)) ;der
+        ((= key 328) (trasllada-figura f 0 5 0)(anima-translacio f)) ;up
+        ((= key 336) (trasllada-figura f 0 -5 0)(anima-translacio f)) ;down
+        ((= key 113)) ;q
+    )
+)
+(defun anima-escalat (f)
+    (cls)
+    (print 'escalat)
+    (pinta-figura f)
+    (setq key (get-key))
+    (cond 
+        ((= key 331) (escala-figura f (/ 1 2) 1 1)(anima-escalat f)) ;izq
+        ((= key 333) (escala-figura f 2 1 1)(anima-escalat f)) ;der
+        ((= key 328) (escala-figura f 1 2 1)(anima-escalat f)) ;up
+        ((= key 336) (escala-figura f 1 (/ 1 2) 1)(anima-escalat f)) ;down
+        ((= key 113)) ;q
+    )
+)
+(defun animacio (f)
+    (cls)
+    (print 'animacio)
+    (pinta-figura f)
+    (setq key (get-key))
+    (cond 
+        ((= key 114) (anima-rotacio f )(animacio f)) ;r
+        ((= key 116) (anima-translacio f )(animacio f)) ;t
+        ((= key 101) (anima-escalat f )(animacio f)) ;e
+        ((= key 113)) ;q
+    )
+)
 ;-----------------------------------------
 ;ejecuciones
 (initEscena)
@@ -262,5 +315,4 @@
 (trasllada-figura 'o 50 0 0)
 (crea-figura 'cub1 'cub '(0 0 255))
 (escala-figura 'cub1 100 100 100)
-(rota-figura 'cub1 30 30 0)
 
