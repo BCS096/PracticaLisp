@@ -240,10 +240,10 @@
     )
 )
 
-(defun agafa-element (x llista)
+(defun agafa-element (pos llista)
     (cond ((null llista) nil)
-        ((equal x (car llista)) (car llista))
-        (t (agafa-element x (cdr llista)))
+          ((= pos 0) (car llista))
+          (t (agafa-element (- pos 1) (cdr llista) ))
     )
 )
 
