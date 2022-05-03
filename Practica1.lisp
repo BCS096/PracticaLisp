@@ -106,10 +106,6 @@
 
 ;patró octaedre
 
-;punts ((0 0 0) (1 0 0) (1 0 1) (0 0 1) (0.5 1 0.5) (0.5 -1 0.5))
-;arestes ((1 2) (2 3) (3 4) (4 1) (1 5) (2 5) (3 5) (4 5) (1 6) (2 6) (3 6) (4 6))
-;cares ((1 2 3 4) (1 5 6) (2 6 7) (3 7 8) (4 8 5) (1 9 10) (2 10 11) (3 11 12) (4 12 9))
-
 (defun initOctaedre ()
     (putprop 'octaedre '((-0.5 0 -0.5) (0.5 0 -0.5) (0.5 0 0.5) (-0.5 0 0.5) 
     (0 0.5 0) (0 -0.5 0)) 'punts)
@@ -233,6 +229,7 @@
     )
 )
 
+
 ;recorre lista x llamanda a pinta-figura para cada elem
 (defun pinta-llista-figures (x)
     ;mientras no sea nula
@@ -242,6 +239,14 @@
      (t (pinta-figura (car x)) (pinta-llista-figures (cdr x)))  ; ('cub1 'prisma1 'cub2)
     )
 )
+
+(defun agafa-element (x llista)
+    (cond ((null llista) nil)
+        ((equal x (car llista)) (car llista))
+        (t (agafa-element x (cdr llista)))
+    )
+)
+
 ;Metodo que extrae lista de figuras de escena
 (defun pinta-figures ()
     (pinta-llista-figures (get 'escena 'figures))
