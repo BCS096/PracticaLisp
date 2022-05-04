@@ -304,6 +304,7 @@
         ((= key 101) (anima-escalat f )(animacio f)) ;e
         ((= key 113)) ;q
     )
+    (cls)
 )
 ;-----------------------------------------
 ;ejecuciones
@@ -315,4 +316,5 @@
 (trasllada-figura 'o 50 0 0)
 (crea-figura 'cub1 'cub '(0 0 255))
 (escala-figura 'cub1 100 100 100)
+(cls)
 
