@@ -196,8 +196,8 @@
 
 (defun pinta-aresta-indv (a f) ;(1 2) , figura
     (pinta-punts 
-        (multpunt (snoc 1 (NTH (- (car a) 1) (get (get f 'patro) 'punts ) )) (get f 'matriu))
-        (multpunt (snoc 1 (NTH (- (car (cdr a)) 1) (get (get f 'patro) 'punts) )) (get f 'matriu))
+        (multpunt (snoc 1 (agafa-element (- (car a) 1) (get (get f 'patro) 'punts ) )) (get f 'matriu))
+        (multpunt (snoc 1 (agafa-element (- (car (cdr a)) 1) (get (get f 'patro) 'punts) )) (get f 'matriu))
          f
     )
 )
@@ -205,7 +205,7 @@
 (defun pinta-arestas (a f) ;1 , figura
     (pinta-aresta-indv
         ;pos -1- de "arestes ((1 2) (2 3) (3 4) (4 1) (1 5) (2 6) (3 7) (4 8) (5 6) (6 7) (7 8) (8 5))" luego (1 2)
-        (NTH (- a 1) (get (get f 'patro) 'arestes))
+        (agafa-element (- a 1) (get (get f 'patro) 'arestes))
         f
     )
    ;concatena el resultado de llamar una vez a get-punts con car de lllista y otra vez a get-punts con cdr de llista luego con eso llama a pinta
