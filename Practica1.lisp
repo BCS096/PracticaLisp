@@ -15,7 +15,7 @@
             (t (cons (mapcar 'car l) (transposta (mapcar 'cdr l)))))
 )
 
-;multipplica cada element de la llista
+;multiplica cada element de la llista
 (defun mult (l)
     (cond ((null l) 1)
         (t (*(car l) (mult (cdr l)))))
@@ -26,14 +26,14 @@
     (apply '+ (mapcar 'mult (transposta l)))
 )
 
-
+;realitza el producte escalar de 'fila' amb cada fila que contengui 'filas'
 (defun unaFila (fila filas)
     (cond
         ((null filas) nil)
         (t (cons (producteEscalar (list fila (car filas))) (unaFila fila (cdr filas))))
     )
 )
-
+;realitza el recorregut de la llista 'l1'
 (defun operacio (l1 l2)
     (cond 
         ((equal (cdr l1) nil) (cons (unaFila (car l1) l2) nil))
@@ -42,6 +42,9 @@
 )
 
 ;multiplica dos matrius (llistes)
+;----------------------------------------------------------------------------------------------
+;TO DO : explicar todo el seguimiento de llamadas a otras funciones para realizar el multmatriu
+;----------------------------------------------------------------------------------------------
 (defun multMatriu (l1 l2)
     (operacio l1 (transposta l2))
 )
@@ -56,7 +59,7 @@
     (/ (* graus pi) 180)
 )
 
-;fica un elements al dinal d'una llista
+;fica un elements al final d'una llista
 (defun snoc (x l) 
     (cond 
         ((null l) (cons x l))
@@ -64,12 +67,13 @@
     )
 )
 
-;translacio mitjançant 3 punts que després emprarem per a una figura
+;translacio mitjançant 3 paràmetres que indiquen la distància
+;a la que volem moure cada coordenada que després emprarem per a una figura
 (defun translacio (dx dy dz) 
     (list '(1 0 0 0) '(0 1 0 0) '(0 0 1 0) (snoc 1 (append (cons dx nil) (cons dy nil) (cons dz nil))))
 )
 
-;escalat mitjançant 3 punts que després emprarem per a una figura
+;escalat mitjançant 3 factors que després emprarem per a una figura
 (defun escalat (ex ey ez)
     (list (append (cons ex nil) (cons 0 nil) (cons 0 nil) (cons 0 nil))
           (append (cons 0 nil) (cons ey nil) (cons 0 nil) (cons 0 nil))
@@ -78,7 +82,7 @@
     )
 )
 
-;rotar l'eix X  mitjançant un punt que després emprarem per a una figura
+;rotar l'eix X  mitjançant un grau que després emprarem per a una figura
 (defun rotax (a)
     (list '(1 0 0 0)
           (append (cons 0 nil) (cons (cos (grausARadians a)) nil) (cons (- 0 (sin (grausARadians a))) nil) (cons 0 nil))
@@ -87,7 +91,7 @@
     )
 )
 
-;rotar l'eix Y  mitjançant un punt que després emprarem per a una figura
+;rotar l'eix Y  mitjançant un grau que després emprarem per a una figura
 (defun rotay (a)
     (list (append (cons (cos (grausARadians a)) nil) (cons 0 nil) (cons (- 0 (sin (grausARadians a))) nil) (cons 0 nil))
           '(0 1 0 0)
@@ -96,7 +100,7 @@
     )
 )
 
-;rotar l'eix Z  mitjançant un punt que després emprarem per a una figura
+;rotar l'eix Z  mitjançant un grau que després emprarem per a una figura
 (defun rotaz (a)
     (list (append (cons (cos (grausARadians a)) nil) (cons (- 0 (sin (grausARadians a))) nil) (cons 0 nil) (cons 0 nil))
           (append (cons (sin (grausARadians a)) nil) (cons (cos (grausARadians a)) nil) (cons 0 nil) (cons 0 nil))
@@ -137,7 +141,7 @@
 
 ;inicialització de l'escena que contindrà la llista de figures
 (defun initEscena ()
-    (putprop 'escena nil 'figures)          ;inicialmente vacia
+    (putprop 'escena nil 'figures)          ;inicialment buida
 )
 
 ;inicialitzam el patrons per tenir-los carregats
@@ -163,7 +167,7 @@
     (pinta-figures)
 )
 
-;borra de la pantalla la figura demanada pero NO de la llsita de figures, sols de la pantalla
+;borra de la pantalla la figura demanada pero NO de la llista de figures, sols de la pantalla
 (defun cls-figura (f)  
     (cls)
     (pinta-llista-figures (borra-element f (get 'escena 'figures)))
@@ -185,8 +189,8 @@
     (snoc x l)
 )
 
-;cream una figura dels 3 patrons que hi ha amb un nom y un color. També necessita tenir
-;la matriu identitat per defecte
+;cream una figura basada amb un dels  3 patrons que hi ha amb un nom y un color.
+;També necessita tenir la matriu identitat per defecte
 (defun crea-figura (n p c)
     (putprop n p 'patro)
     (putprop n c 'color)
@@ -219,12 +223,12 @@
 ;pinta dos punts d'una figura especifica
 (defun pinta-punts (a b f)
     (color (car (get f 'color)) (cadr (get f 'color)) (caddr (get f 'color)) )
-    (move (+ (realpart (round (car a))) 320) (+ (realpart (round (car (cdr a)))) 187));lapiz en 1r punto
-    (draw (+ (realpart (round (car b))) 320) (+ (realpart (round (car (cdr b)))) 187));desplazamos lapiz al 2r punto pintando
+    (move (+ (realpart (round (car a))) 320) (+ (realpart (round (car (cdr a)))) 187));llapis en 1r punt
+    (draw (+ (realpart (round (car b))) 320) (+ (realpart (round (car (cdr b)))) 187));desplaçam llapis al 2n punt pintant
 )
 
 ;pinta una aresta d'una figura especifica
-(defun pinta-aresta-indv (a f) ;(1 2) , figura
+(defun pinta-aresta-indv (a f) 
     (pinta-punts 
         (multpunt (snoc 1 (NTH (- (car a) 1) (get (get f 'patro) 'punts ) )) (get f 'matriu))
         (multpunt (snoc 1 (NTH (- (car (cdr a)) 1) (get (get f 'patro) 'punts) )) (get f 'matriu))
@@ -233,51 +237,47 @@
 )
 
 ;pinta arestes d'una figura especifica
-(defun pinta-arestas (a f) ;1 , figura
+(defun pinta-arestas (a f)
     (pinta-aresta-indv
-        ;pos -1- de "arestes ((1 2) (2 3) (3 4) (4 1) (1 5) (2 6) (3 7) (4 8) (5 6) (6 7) (7 8) (8 5))" luego (1 2)
         (NTH (- a 1) (get (get f 'patro) 'arestes))
         f
     )
-   ;concatena el resultado de llamar una vez a get-punts con car de llista y otra vez a get-punts con cdr de llista luego con eso llama a pinta
 )
 
 ;pinta una cara individual d'una figura
-(defun pinta-cara-indv (c f) ;(1 2 3 4), figura
+(defun pinta-cara-indv (c f)
     (cond ((null c) nil)
-        (t (pinta-arestas (car c) f)  (pinta-cara-indv (cdr c) f) ;(1 -2- 3 4) 
+        (t (pinta-arestas (car c) f)  (pinta-cara-indv (cdr c) f)
         )
     )
 )
 
 ;pinta les cares d'una figura
-(defun pinta-caras (c f) ;((1 2 3 4) (1 6 9 5) (2 6 10 7) (3 7 11 8) (4 8 12 5) (9 10 11 12)) , figura
+(defun pinta-caras (c f)
     (cond ((null c) nil)
-        (t (pinta-cara-indv (car c) f) ;(1 2 3 4)
-           (pinta-caras (cdr c) f) ;... siguiente cara (x1,x2,x3,x  
+        (t (pinta-cara-indv (car c) f)
+           (pinta-caras (cdr c) f) 
         )
     )
 )
 
 ;pinta una figura demanada
-(defun pinta-figura (f) ;figura
+(defun pinta-figura (f)
     (pinta-caras 
-            (get (get f 'patro) 'cares) f ;cares ((1 2 3 4) (1 6 9 5) (2 6 10 7) (3 7 11 8) (4 8 12 5) (9 10 11 12))
+            (get (get f 'patro) 'cares) f
     )
 )
 
 
 ;recorre lista x llamanda a pinta-figura para cada elem
 (defun pinta-llista-figures (x)
-    ;mientras no sea nula
     (cond
     ((null x) nil)
-        ;pinta figura i
-     (t (pinta-figura (car x)) (pinta-llista-figures (cdr x)))  ; ('cub1 'prisma1 'cub2)
+     (t (pinta-figura (car x)) (pinta-llista-figures (cdr x)))
     )
 )
 
-;NTH xd
+;TO DO : explicar
 (defun agafa-element (pos llista)
     (cond ((null llista) nil)
           ((= pos 0) (car llista))
@@ -286,6 +286,7 @@
 )
 
 ;Metodo que extrae lista de figuras de escena
+;TO DO : explicar la logica de todas las llamadas a funciones que desencadena esta funcion
 (defun pinta-figures ()
     (pinta-llista-figures (get 'escena 'figures))
 )
