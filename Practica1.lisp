@@ -43,7 +43,8 @@
 
 ;multiplica dos matrius (llistes)
 ;----------------------------------------------------------------------------------------------
-;TO DO : explicar todo el seguimiento de llamadas a otras funciones para realizar el multmatriu
+;Per a multiplicar dos matrius, primer feim un recorregut de la primera mentra realitzam el 
+;producte escalar de cada una de les seves files amb la segona matriu transposta.
 ;----------------------------------------------------------------------------------------------
 (defun multMatriu (l1 l2)
     (operacio l1 (transposta l2))
@@ -268,16 +269,14 @@
     )
 )
 
-
-;recorre lista x llamanda a pinta-figura para cada elem
+;recorre lista x llamando a pinta-figura para cada elemento
 (defun pinta-llista-figures (x)
     (cond
     ((null x) nil)
      (t (pinta-figura (car x)) (pinta-llista-figures (cdr x)))
     )
 )
-
-;TO DO : explicar
+;recorre la lista llista hasta devolver el elemento en la posicion pos
 (defun agafa-element (pos llista)
     (cond ((null llista) nil)
           ((= pos 0) (car llista))
@@ -286,7 +285,14 @@
 )
 
 ;Metodo que extrae lista de figuras de escena
-;TO DO : explicar la logica de todas las llamadas a funciones que desencadena esta funcion
+
+;----------------------------------------------------------------------------------------------
+; Primer extreim totes les figures de l'escena, després cridam a la funció pinta-figures per a
+; cada una d'aquestes figures, extreim la llista de cares del patró de la dita figura i cridam a
+; pinta-cares, pintam cada una d'aquestes cares, entenguen que pintar una cara és pintar totes
+; les seves arestes i pinta l'aresta és pintar el seu punt unir-los i escalar la figura.
+;----------------------------------------------------------------------------------------------
+
 (defun pinta-figures ()
     (pinta-llista-figures (get 'escena 'figures))
 )
