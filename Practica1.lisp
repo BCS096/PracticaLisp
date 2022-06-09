@@ -363,13 +363,13 @@
     (cls)
 )
 ;-----------------------------------------
-;ejecuciones
+;execucions
 (initEscena)
 (inicia-patrons)
-(crea-figura 'o 'octaedre '(255 0 0))
-(escala-figura 'o 100 200 100)
-(rota-figura 'o 0 30 0)
-(crea-figura 'cub1 'cub '(0 0 255))
-(escala-figura 'cub1 100 100 100)
+;(crea-figura 'o 'octaedre '(255 0 0))
+;(escala-figura 'o 100 200 100)
+;(rota-figura 'o 0 30 0)
+;(crea-figura 'cub1 'cub '(0 0 255))
+;(escala-figura 'cub1 100 100 100)
 (cls)
 
